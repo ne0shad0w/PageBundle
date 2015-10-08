@@ -1,0 +1,47 @@
+{% extends 'PageBundle::layout.html.twig'%}
+
+{% block javascripts %}
+	{{ parent() }}
+		<script type="text/javascript" src="{{ asset('bundles/zephyradmincore/tinymce/js/tinymce/tinymce.min.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('bundles/zephyradmincore/js/page.js') }}"></script>
+
+<script type="text/javascript">
+tinymce.init({
+	entity_encoding : "raw",
+    selector: "textarea",
+	language: "fr_FR",
+	height: 400 ,
+    theme: "modern",
+	save_enablewhendirty: true,
+	textcolor_map: ["000000","Noir","13a0d5","Bleu ciel","bbbbbb","Gris pâle" , "f3f3f3" , ""] ,
+    plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons template paste textcolor colorpicker textpattern responsivefilemanager"
+    ],
+	external_filemanager_path:"{{ asset('filemanager/') }}",
+	filemanager_title:"Gestionnaire de fichier" ,
+	external_plugins: { "filemanager" : "/filemanager/plugin.min.js"},
+	filemanager_access_key:"kjhasdf6087623ad" ,
+    toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media | forecolor backcolor emoticons",
+    image_advtab: true
+});
+</script>
+{% endblock %}
+
+{% block body %}
+
+<style>
+#modifier_html label { display:none;}
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: -0;
+}
+</style>
+	<div style="margin-top:20px;">
+	{{ form_start(form) }}
+			{{ form_widget(form) }}
+	{{ form_end(form) }}
+	</div>
+{% endblock %}

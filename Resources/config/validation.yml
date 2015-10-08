@@ -1,0 +1,13 @@
+ne0shad0w\PageBundle\PageBundle\Entity\PgPage:
+    properties:
+        nomPage:
+            - NotBlank: ~
+            - NotNull: ~
+            - Regex:
+                pattern: "/\d/"
+                match: false
+                message: Le nom de la page ne peut pas contenir de nombre.
+        Template:
+             - NotNull: ~
+
+

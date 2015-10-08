@@ -1,0 +1,110 @@
+app_bundle_page:
+    resource: "@PageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+adm_gestionpage:
+    path:   /admin/page/liste
+    defaults:  { _controller: PageBundle:Default:GestionPage }
+
+page_edit:
+    path:   /admin/page/edit/{id}
+    defaults:  { _controller: PageBundle:Default:PageEdit }
+
+page_delete:
+    path:   /admin/page/delete/{id}
+    defaults:  { _controller: PageBundle:Default:DeletePage }
+
+section_delete:
+    path:   /admin/page/section/delete/{id}
+    defaults:  { _controller: PageBundle:Default:DeleteSection }
+
+colonne_delete:
+    path:   /admin/page/colonne/delete/{id}/{section}/{ligne}
+    defaults:  { _controller: PageBundle:Default:DeleteColonne }
+
+page_template:
+    path:   /admin/page/template/{id}
+    defaults:  { _controller: PageBundle:Default:TemplateEdit , routeparent : adm_gestionpage }
+
+page_edit_colonne:
+    path:   /admin/page/colonne/edit/{id}/{section}/{ligne}/{colonne}
+    defaults: 
+        _controller: PageBundle:Default:ColonneEditHTML
+        routeparent : page_colonne||type=>variable
+
+
+ajax_UpdateClassBlocRow:
+    path:   /admin/page/section/update/class/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdateClassBlocRow }
+    requirements:
+        id:  \d+
+
+ajax_ActivePage:
+    path:   /admin/page/actif/{id}
+    defaults:  { _controller: PageBundle:Ajax:ActivePage }
+    requirements:
+        id:  \d+
+
+ajax_UpdateStyleBlocRow:
+    path:   /admin/page/section/update/style/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdateStyleBlocRow }
+    requirements:
+        id:  \d+
+
+ajax_UpdatePositionBlocRow:
+    path:   /admin/page/section/update/position/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdatePositionBlocRow }
+    requirements:
+        id:  \d+
+
+ajax_UpdateClassBlocCol:
+    path:   /admin/page/colonne/update/class/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdateClassBlocCol }
+    requirements:
+        id:  \d+
+
+ajax_UpdateLargeurBlocCol:
+    path:   /admin/page/colonne/update/largeur/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdateStyleBlocCol }
+    requirements:
+        id:  \d+
+
+ajax_UpdateStyleBlocCol:
+    path:   /admin/page/colonne/update/style/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdateStyleTemplateBlocCol }
+    requirements:
+        id:  \d+
+
+ajax_UpdatePositionBlocCol:
+    path:   /admin/page/colonne/update/position/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdatePositionBlocCol }
+    requirements:
+        id:  \d+
+
+ajax_UpdateHTMLBlocCol:
+    path:   /admin/page/html/update/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdateHTMLBlocCol }
+    requirements:
+        id:  \d+
+
+ajax_UpdateNamePage:
+    path:   /admin/page/nom/update/nom/{id}
+    defaults:  { _controller: PageBundle:Ajax:UpdateNamePage }
+    requirements:
+        id:  \d+
+
+
+page_colonne:
+    path:   /admin/page/colonne/{id}/{section}/{ligne}
+    defaults: 
+        _controller: PageBundle:Default:ColonneEdit 
+        routeparent : 'page_template||type=>variable,\ne0shad0w\PageBundle\PageBundle\Entity\PgPage=>id,idPage=>id'
+
+edit_css:
+    path:   /admin/css/edit
+    defaults:  { _controller: PageBundle:Css:Editer }
+
+edite_css_enregistrer:
+    path:   /admin/css/enregistrer
+    defaults:  { _controller: PageBundle:Css:Enregistrement }

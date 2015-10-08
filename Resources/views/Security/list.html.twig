@@ -1,0 +1,68 @@
+{% extends 'PageBundle::layout.html.twig'%}
+{% block stylesheets_admin %}
+{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('bundles/zephyradmincore/css/liste_user.css') }}" type="text/css" media="screen" />
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+	<script src="{{ asset('bundles/azephyradmincorepp/js/listepage.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/zephyradmincore/js/edit.js') }}"></script> 
+{% endblock %}
+
+{% block body %}
+<div class="form_ajout_page">
+	{{ form_start(form) }}
+		{{ form_errors(form) }}
+		<div class="form_row">
+			{{ form_label(form.nomPage, 'Nom de la page' ) }}
+			{{ form_widget(form.nomPage, {'attr': {'class': 'champ_nompage_text'}}) }}	
+			{{ form_errors(form.nomPage) }}
+		</div>
+		<div class="form_row form_row_sm">
+			{{ form_label(form.Template, 'Nom du template' ) }}
+			{{ form_widget(form.Template, {'attr': {'class': 'champ_template_text' }}) }}	
+			{{ form_errors(form.Template) }}
+		</div>
+
+	{{ form_end(form) }}
+</div>
+
+<div id="liste_user">
+	<table class="table table-bordered table-hover">
+		<thead>
+		<tr>
+			<th>#</th>
+			<th>{{ 'page.nompage'|trans }}</th>
+			<th>{{ 'page.Liens'|trans }}</th>
+			<th>{{ 'page.actifpage'|trans }}</th>
+			<th>{{ 'page.templatepage'|trans }}</th>
+			<th>{{ 'page.section'|trans }}</th>
+			<th>{{ 'page.action'|trans }}</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% set n = 0 %}
+		{% for page in pages %}
+			<tr id="page_{{ page.idpage }}" class="{% if not page.actifpage %} danger{% endif %}">
+				<td>{{ page.idpage }}</td>
+				<td id="nomtable"><span class="editable" contenteditable="true" id="{{ page.idpage }}" name="nom" alt="nom">{{ page.nompage }}</span> <img src="{{ asset('bundles/zephyradmincore/img/rename.svg') }}" onclick="edit_champ('nom',{{ n }});"></td>
+				<td><a href="{{ app.request.getBaseURL() }}/page/{{ page.canonicalPage }}">/page/{{ page.canonicalPage }}</a></td>
+				<td><div class="onoffswitch">
+						<input type="checkbox" onclick="activate({{ page.idpage }});" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch_a_{{page.idpage}}" {% if page.actifpage %}checked{% endif %}>
+						 <label class="onoffswitch-label" for="myonoffswitch_a_{{page.idpage}}">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</td>
+				<td>{{ page.template.nomtemplate }}</td>
+				<td>{{ page.blocrow.count }}</td>		
+				<td><a href="{{ path('page_template',{'id' : page.idpage }) }}">{{ 'page.editer'|trans}}</a> - <a href="{{ path('page_delete',{'id' : page.idpage}) }}" onclick="return confirm('{{ 'page.confirmdelete'|trans({'%s': page.nompage }) }}');">{{ 'delete'|trans}}</a></td>				
+			</tr>
+			{% set n=n+1 %}
+		{% endfor %}
+		</tbody>
+	</table>	
+</div>
+{% endblock %}

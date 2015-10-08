@@ -1,0 +1,59 @@
+{% extends 'PageBundle::layout.html.twig'%}
+{% block stylesheets_admin %}
+{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('bundles/zephyradmincore/css/liste_user.css') }}" type="text/css" media="screen" />
+	<link rel="stylesheet" href="{{ asset('bundles/zephyradmincore/css/liste_section.css') }}" type="text/css" media="screen" />
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+	<script type="text/javascript" src="{{ asset('bundles/zephyradmincore/js/edit.js') }}"></script> 
+{% endblock %}
+
+{% block body %}
+<div class="navigation">
+
+	</div>
+	<div>
+	{{ form_start(form) }}
+		{{ form_errors(form) }}
+		<div class="form_row" style="max-width:600px;">
+			{{ form_label(form.nomSection, 'Nom de la section' ) }}
+			{{ form_widget(form.nomSection, {'attr': {'class': 'champ_nomsection_text'}}) }}	
+			{{ form_errors(form.nomSection) }}
+		</div>
+	{{ form_end(form) }}
+</div>
+<div id="liste_user">
+
+	<table id="tab_section" class="table table-bordered table-hover">
+		<thead>
+		<tr>
+			<th>#</th>
+			<th>{{ 'listtemplate.section'|trans }} (Div ID)</th>
+			<th>{{ 'listtemplate.class'|trans }}</th>
+			<th>{{ 'listtemplate.style'|trans }}</th>
+			<th>{{ 'listtemplate.position'|trans }}</th>
+			<th>{{ 'page.action'|trans }}</th>
+
+		</tr>
+		</thead>
+		<tbody>		
+			{% set n = 0 %}
+			{% for sect in pages.blocrow %}
+				<tr class="">
+					<td id="numero">{{ sect.idblocrow }}</td>
+					<td id="nom">{{ sect.nomblocrow }}</td>
+					<td id="class"><span class="editable" contenteditable="true" id="{{ sect.idblocrow }}" name="class" alt="section">{{ sect.classblocrow }}</span> <img src="{{ asset('bundles/zephyradmincore/img/rename.svg') }}" onclick="edit_champ('class',{{ n }});"></td>
+					<td id="style"><span class="editable" contenteditable="true" id="{{ sect.idblocrow }}" name="style" alt="section">{{ sect.styleblocrow }}</span><img src="{{ asset('bundles/zephyradmincore/img/rename.svg') }}" onclick="edit_champ('style',{{ n }});"></td>
+					<td id="position"><span class="editable" contenteditable="true" id="{{ sect.idblocrow }}" name="position" alt="section">{{ sect.positionblocrow }}</span><img src="{{ asset('bundles/zephyradmincore/img/rename.svg') }}" onclick="edit_champ('position',{{ n }});"></td>
+					<td id="action"><a href="{{ path('page_colonne',{'id' : pages.idPage , 'section' : n , 'ligne': n }) }}">{{ 'page.editerColonne'|trans }}</a> - <a href="{{ path('section_delete',{'id' : sect.idblocrow}) }}" onclick="return confirm('{{ 'listtemplate.confirmdelete'|trans({'%s': sect.nomblocrow }) }}');">{{ 'delete'|trans}}</a></td>				
+				</tr>
+				{% set n=n+1 %}
+			{% endfor %}
+		
+		
+		</tbody>
+	</table>	
+</div>
+{% endblock %}

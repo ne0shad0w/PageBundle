@@ -1,0 +1,31 @@
+{% extends 'PageBundle::layout.html.twig'%}
+
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/app/table/bootstrap-table.css') }}">
+
+{% endblock %}
+
+
+{% block body %}
+<script src="{{ asset('bundles/page/js/liste/liste.js') }}" /></script>
+
+<div id="list_event">
+	<table id="events-table" data-url="{{ url('template_list_data') }}" data-sort-name="nomtemplate"  data-sort-order="asc" data-height="auto" data-search="true" data-pagination="true" data-show-columns="true" data-show-refresh="true">
+		<thead>
+		<tr>
+			<th data-field="id" data-sortable="true" data-visible="false" data-class="username">{{ '# référence'|trans }}</th>
+			<th data-field="nomtemplate" data-sortable="true" data-class="domaine">{{ 'Nom'|trans }}</th>
+			<th data-field="fichiertemplate" data-sortable="true" data-class="domaine">{{ 'Fichier'|trans }}</th>
+			<th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">{{ 'Actions'|trans }}</th>
+		</tr>
+		</thead>
+
+	</table>
+</div>
+<script src="{{ asset('bundles/app/table/bootstrap-table.js') }}"></script>
+<script src="{{ asset('bundles/app/table/bootstrap-table-all.min.js') }}"></script>
+<script src="{{ asset('bundles/app/table/locale/bootstrap-table-fr-FR.js') }}"></script>
+
+{% endblock%}

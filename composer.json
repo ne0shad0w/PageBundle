@@ -1,0 +1,17 @@
+{
+    "name": "ne0shad0w/zephyr-page-bundle",
+    "description": "Gestion des pages du site web",
+    "authors": [
+        {
+            "name": "Steve Gaudreault"
+        }
+    ],
+    "require": {
+        "ne0shad0w/zephyr-admincore-bundle": "master"
+    },
+     "autoload": {
+          "psr-4": {
+              "ne0shad0w\\PageBundle\\PageBundle\\" : ""
+		  }
+	 }
+}

@@ -1,0 +1,54 @@
+
+page:
+     nompage: "Nom de la page"
+     actifpage: "Actif"
+     templatepage: "Nom du template"
+     action: "Actions"
+     editer: "Éditer"
+     editerColonne: "Éditer les colonnes"
+     section: "Nb. Section"
+     confirmdelete: "Désirez-vous effacer la page %s ?"
+     Liens: "URL de la page"
+
+delete: "Effacer"
+yes: Oui
+no: Non
+listepage: "Liste des pages"
+listeColonne: "Liste des colonnes"
+section: "Liste des sections"
+admin: "Administration"
+sep_chemin: " >> "
+Page: "Page"
+Colonne: "Colonne"
+
+listtemplate:
+      section: "Nom de la section"
+      actif: "Actif"
+      colonne: "Nom de la colonne"
+      class: "Classe"
+      style: "Style"
+      position: "Position"
+      confirmdelete: "Désirez-vous effacer la section %s ?"
+
+listcolonne:
+      colonne: "Nom de la colonne"
+      actif: "Actif"
+      colonne: "Nom de la colonne"
+      class: "Classe"
+      largeur: "Largeur"
+      html: "Éditer le HTML"
+      position: "Position"
+      confirmdelete: "Désirez-vous effacer la colonne %s ?"
+      predefini: "Style prédéfini"
+"Nom de la page" : "Nom de la page"
+"Nom du template" : "Nom du template"
+standard : standard
+Ajouter : Ajouter
+"Nom de la section" : "Nom de la section"
+"Nom de la colonne" : "Nom de la colonne"
+
+adm_profile_other : "Information du compte"
+adm_gestionpage : "Gestion des pages"
+page_template : "Liste des sections"
+page_colonne : "Liste des colonnes"
+page_edit_colonne : "Editer le html de la colonne"

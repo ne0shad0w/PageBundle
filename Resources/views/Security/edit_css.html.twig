@@ -1,0 +1,16 @@
+{% extends 'PageBundle::layout.html.twig'%}
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('bundles/page/js/editecss.js') }}"></script>
+
+{% endblock %}
+{% block body %}
+	
+	<div style="padding:20px; margin: 0 0 10px 0;">
+		<div style="float:left;"><button onclick="SaveCode();" class="btn btn-default" value="Enregistrer" name="Enregistrer">Enregistrer</button></div>
+		<div id="message" style="padding:10px 0 0 10px; min-heigth:40px;float:left; line-heigth:25px;"></div>
+	</div>
+	<div style="padding:10px 10px 0 10px;">
+		<textarea id="html" style="width:100%; height:500px;">{{ code }}</textarea>
+	</div>
+{% endblock %}
