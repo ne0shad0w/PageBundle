@@ -31,6 +31,7 @@
 		<tr>
 			<th>#</th>
 			<th>{{ 'listtemplate.section'|trans }} (Div ID)</th>
+			<th>{{ 'listcolonne.predefini'|trans }}</th>
 			<th>{{ 'listtemplate.class'|trans }}</th>
 			<th>{{ 'listtemplate.style'|trans }}</th>
 			<th>{{ 'listtemplate.position'|trans }}</th>
@@ -43,7 +44,15 @@
 			{% for sect in pages.blocrow %}
 				<tr class="">
 					<td id="numero">{{ sect.idblocrow }}</td>
-					<td id="nom">{{ sect.nomblocrow }}</td>
+					<td id="nom">section_{{ sect.nomblocrow }}</td>
+					<td id="style" ><select id="{{ sect.idblocrow }}" name="template" alt="row" style="width:100%;" onchange="save_champ('template',{{ n }},this , this.options[this.selectedIndex].value );">
+					<option value="0">--- Style ---</option>
+					
+					{% for t in template %}
+						<option value="{{ t.idTemplate }}" {% if sect.template is not null%}{% if sect.template.idtemplate == t.idTemplate %}selected{% endif %}{% endif %}>{{ t.nomTemplate}}</option> 
+					{% endfor %}
+					
+					</select></td>
 					<td id="class"><span class="editable" contenteditable="true" id="{{ sect.idblocrow }}" name="class" alt="section">{{ sect.classblocrow }}</span> <img src="{{ asset('bundles/zephyradmincore/img/rename.svg') }}" onclick="edit_champ('class',{{ n }});"></td>
 					<td id="style"><span class="editable" contenteditable="true" id="{{ sect.idblocrow }}" name="style" alt="section">{{ sect.styleblocrow }}</span><img src="{{ asset('bundles/zephyradmincore/img/rename.svg') }}" onclick="edit_champ('style',{{ n }});"></td>
 					<td id="position"><span class="editable" contenteditable="true" id="{{ sect.idblocrow }}" name="position" alt="section">{{ sect.positionblocrow }}</span><img src="{{ asset('bundles/zephyradmincore/img/rename.svg') }}" onclick="edit_champ('position',{{ n }});"></td>

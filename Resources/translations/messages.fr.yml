@@ -9,7 +9,8 @@ page:
      section: "Nb. Section"
      confirmdelete: "Désirez-vous effacer la page %s ?"
      Liens: "URL de la page"
-
+     pageparent : "Page parent"
+Delete: "Effacer"
 delete: "Effacer"
 yes: Oui
 no: Non
@@ -47,8 +48,13 @@ Ajouter : Ajouter
 "Nom de la section" : "Nom de la section"
 "Nom de la colonne" : "Nom de la colonne"
 
+gestionTemplate : "Gestion des templates"
 adm_profile_other : "Information du compte"
 adm_gestionpage : "Gestion des pages"
 page_template : "Liste des sections"
 page_colonne : "Liste des colonnes"
 page_edit_colonne : "Editer le html de la colonne"
+liste_template : "Liste des templates"
+edit_template : "Modifier un template"
+
+

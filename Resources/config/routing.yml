@@ -33,6 +33,9 @@ page_edit_colonne:
         _controller: PageBundle:Default:ColonneEditHTML
         routeparent : page_colonne||type=>variable
 
+adm_gestion_fichier:
+    path:   /admin/Gestionnaire/fichier
+    defaults:  { _controller: PageBundle:Gestionnaire:fichier }
 
 ajax_UpdateClassBlocRow:
     path:   /admin/page/section/update/class/{id}

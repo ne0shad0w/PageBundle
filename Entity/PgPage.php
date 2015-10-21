@@ -58,6 +58,14 @@ class PgPage
      */
     private $template;
 
+	/**
+     * @var PgPage $pageparent
+     *
+     * @ORM\ManyToOne(targetEntity="PgPage", fetch="EAGER")
+     * @ORM\JoinColumn(name="page_parent", referencedColumnName="id_page")
+     */
+    private $pageparent;
+
 
  	public function __construct() {
         $this->blocrow = new ArrayCollection();
@@ -174,6 +182,29 @@ class PgPage
     public function setTemplate(\ne0shad0w\PageBundle\PageBundle\Entity\PgTemplate $template = null)
     {
         $this->template = $template;
+    
+        return $this;
+    }
+
+    /**
+     * Get pageprent
+     *
+     * @return \ne0shad0w\PageBundle\PageBundle\Entity\PgPage 
+     */
+    public function getPageparent()
+    {
+        return $this->pageparent;
+    }
+
+    /**
+     * Set template
+     *
+     * @param \ne0shad0w\PageBundle\PageBundle\Entity\PgPage $pageparent
+     * @return PgPage
+     */
+    public function setPageparent(\ne0shad0w\PageBundle\PageBundle\Entity\PgPage $pageparent = null)
+    {
+        $this->pageparent = $pageparent;
     
         return $this;
     }

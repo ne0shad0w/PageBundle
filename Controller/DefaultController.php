@@ -30,7 +30,17 @@ class DefaultController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
 		$t = $em->getRepository('PageBundle:PgTemplate')->findAll();
-		foreach($t as $tmp) $templates[$tmp->getIdTemplate()] = $tmp->getNomTemplate();
+		foreach($t as $tmp) {
+			$file = "../src/FrontBundle/Resources/views/Default/" . $tmp->getNomTemplate() . ".html.twig" ;
+			if ( file_exists( $file ) ) {
+				//$f = fopen($file, 'r');
+				clearstatcache();
+				if(filesize($file)) {
+					$templates[$tmp->getIdTemplate()] = $tmp->getNomTemplate();
+				}
+				
+			}
+		}
 		$page = new PgPage();
 		$p = new PageModel();
 		
@@ -61,11 +71,30 @@ class DefaultController extends Controller
 		//$logger->crit('Une erreur est survenue');
 		
 		$pages = $em->getRepository('PageBundle:PgPage')->findAll();
-			
+		$pages = $this->triPage($pages);
+
         return $this->render('PageBundle:Security:list.html.twig',array('pages'=>$pages , 'form'=> $form->createView() ));
 
     }
 	
+	private function triPage($pages){
+		$tab = array();		
+		$neededObjects = array_filter( $pages,function ($e) {return $e->getPageparent() === NULL;	});
+		foreach( $neededObjects as $p ){
+			$tab[] = $p ;
+			$tab = $this->FindPageEnfant($tab , $p , $pages ) ;
+		}
+		return $tab ;	
+	}
+	
+	private function FindPageEnfant($tab , $parent, $pages) {
+		$neededObjects = array_filter( $pages,function ($e) use ($parent) {return $e->getPageparent() === $parent ;	});
+		foreach( $neededObjects as $p ){
+			$tab[] = $p ;
+			$tab = $this->FindPageEnfant($tab , $p , $pages ) ;
+		}
+		return $tab;
+	}
 	public function PageEditAction($id)
     {
 		$em = $this->getDoctrine()->getManager();
@@ -107,14 +136,15 @@ class DefaultController extends Controller
     	} 
 		
 
-		
+		$rowtemplate = $em->getRepository('PageBundle:PgRowTemplate')->findAll();
+
 		$pages = $em->getRepository('PageBundle:PgPage')->find($id);
 		if ( !$pages ) {
 			throw $this->createNotFoundException(
 				'No page found for id '.$id
 			);
 		}
-        return $this->render('PageBundle:Security:list.template.page.html.twig',array('pages'=>$pages , 'form'=> $form->createView()) );
+        return $this->render('PageBundle:Security:list.template.page.html.twig',array('template'=>$rowtemplate,'pages'=>$pages , 'form'=> $form->createView()) );
     }
 	
 	public function ColonneEditAction($id ,$section ,$ligne  , Request $request)

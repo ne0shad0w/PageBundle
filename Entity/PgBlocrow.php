@@ -73,11 +73,40 @@ class PgBlocrow
      */
     private $bloccol;
 
+	/**
+     * @var PgRowTemplate $template
+     *
+     * @ORM\ManyToOne(targetEntity="PgRowTemplate", inversedBy="row" , fetch="EAGER")
+     * @ORM\JoinColumn(name="id_template", referencedColumnName="id_template")
+     */
+    private $template;
 
  	public function __construct() {
         $this->bloccol = new ArrayCollection();
     }
  
+    /**
+     * Set template
+     *
+     * @param \ne0shad0w\PageBundle\PageBundle\Entity\PgRowTemplate $template
+     * @return PgBloccol
+     */
+    public function setTemplate(\ne0shad0w\PageBundle\PageBundle\Entity\PgRowTemplate $template = null)
+    {
+        $this->template = $template;
+    
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return \ne0shad0w\PageBundle\PageBundle\Entity\PgRowTemplate 
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
 
     /**
      * Set idBlocrow

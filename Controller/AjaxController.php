@@ -11,6 +11,9 @@ use ne0shad0w\PageBundle\PageBundle\Entity\PgTemplateBlocrow;
 use ne0shad0w\PageBundle\PageBundle\Entity\PgBlocrow;
 use ne0shad0w\PageBundle\PageBundle\Entity\PgBloccol;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 class AjaxController extends Controller
 {
 
@@ -220,4 +223,69 @@ class AjaxController extends Controller
 		
 		return new Response('error', 400);
     }
+	
+	/**
+     * @Route("/admin/page/parent/update/{id}/{parent}", name = "page_update_parent" , options={ "i18n"= false } , defaults={} )
+     * @Template
+    */
+    public function updateParentAction($id,$parent)
+    {
+		$em = $this->getDoctrine()->getManager();
+		$page = $em->getRepository('PageBundle:PgPage')->find($id);
+		if ( $parent > 0 ){
+			$pageparent = $em->getRepository('PageBundle:PgPage')->find($parent);
+			if ( $id && $parent ) {
+				$page->setPageparent($pageparent);
+				$em->flush();
+				return new Response('ok');
+			}
+		} else {
+			if ( $id ) {
+				$page->setPageparent(NULL);
+				$em->flush();
+				return new Response('ok');
+			}
+		}	
+		
+		return new Response("error",400);
+	}
+	
+	/**
+     * @Route("/admin/page/row/update/template/{id}", name = "page_update_sect_template" )
+     * @Template
+    */	
+	public function UpdateTemplateBlocRowAction($id , Request $request)
+    {
+		$class = $request->request->get('contenu');
+		
+		if ( !is_numeric($class) ) return new Response('error',400);
+		$em = $this->getDoctrine()->getManager();
+		if ($request->isXMLHttpRequest()) {   			
+			$section = $em->getRepository('PageBundle:PgBlocrow')->find($id);
+			if ( $class == 0 ) {
+					if (!$section) {
+						return new Response('error', 400);
+					}
+					$section->setTemplate(NULL);			
+					$em->flush();
+					return new Response('ok');
+				
+			} else {
+				$template = $em->getRepository('PageBundle:PgRowTemplate')->find($class);
+				if ( $template ) {
+					
+					if (!$section) {
+						return new Response('error', 400);
+					}
+					$section->setTemplate($template);			
+					$em->flush();
+					return new Response('ok');
+				} else return new Response('template('.$class.')', 400);
+			}
+		}
+		
+		return new Response('error', 400);
+    }
+
+	
 }

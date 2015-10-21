@@ -12,11 +12,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use A2lix\I18nDoctrineBundle\Annotation\I18nDoctrine;
 
    /**
-   * @Security("has_role('ROLE_ADMIN')")
+   * @Security("has_role('ROLE_SUPER_ADMIN')")
    */
 
 class TemplateController extends Controller
 {
+	protected $dir_theme = "../src/FrontBundle/Resources/views/"  ;
+	
 	  /**
      * @Route("/admin/page/template/edite/{name}", name = "edit_template" , options={"expose"= true} , defaults={"routeparent" = "liste_template"} )
      * @Template
@@ -30,10 +32,17 @@ class TemplateController extends Controller
 			$em = $this->getDoctrine()->getManager();
 			$template = $em->getRepository('PageBundle:PgTemplate')->findByinfoTemplate($name);
 			$name .= ".html.twig";
-			if ( $template && file_exists("../src/FrontBundle/Resources/views/Default/".$name) ){
-				$content = file_get_contents("../src/FrontBundle/Resources/views/Default/".$name, FILE_USE_INCLUDE_PATH) ;	
-			    return $this->render('PageBundle:Security:edit_template.html.twig',array('code'=> $content , 'template'=> $name ));
+			if ( $template && !file_exists($this->dir_theme . $this->container->getParameter('front_theme') ."/" . $name) ){
+					$monfichier = fopen($this->dir_theme . $this->container->getParameter('front_theme') ."/" .$name, 'w');
+					fseek($monfichier, 0);
+					fputs($monfichier, $code);			
+					fclose($monfichier);
+			} 
+			if ( $template && file_exists($this->dir_theme . $this->container->getParameter('front_theme') ."/" . $name) ){
+				$content = file_get_contents($this->dir_theme . $this->container->getParameter('front_theme') ."/".$name, FILE_USE_INCLUDE_PATH) ;
+				return $this->render('PageBundle:Security:edit_template.html.twig',array('code'=> $content , 'template'=> $name ));
 			}
+			
 				
 		}
 		return $this->render('PageBundle:Security:edit_template.html.twig',array('code'=> "" , 'template'=> "" ));
@@ -50,7 +59,7 @@ class TemplateController extends Controller
 			$code = $request->request->get('code');
 			$template = $request->request->get('template');
 			if ( $template == "" || $template == NULL ) die("impossible");
-			$dir = "../src/FrontBundle/Resources/views/Default/";
+			$dir = $this->dir_theme . $this->container->getParameter('front_theme') ."/";
 			$file = $template ;
 			if ( file_exists($dir.$file) ) {
 				$now = new \Datetime;
