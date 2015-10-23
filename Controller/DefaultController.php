@@ -31,7 +31,7 @@ class DefaultController extends Controller
 		
 		$t = $em->getRepository('PageBundle:PgTemplate')->findAll();
 		foreach($t as $tmp) {
-			$file = "../src/FrontBundle/Resources/views/Default/" . $tmp->getNomTemplate() . ".html.twig" ;
+			$file = "../app/Resources/FrontBundle/views/".$this->container->getParameter('front_theme')."/" . $tmp->getNomTemplate() . ".html.twig" ;
 			if ( file_exists( $file ) ) {
 				//$f = fopen($file, 'r');
 				clearstatcache();

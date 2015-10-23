@@ -17,7 +17,7 @@ use A2lix\I18nDoctrineBundle\Annotation\I18nDoctrine;
 
 class TemplateController extends Controller
 {
-	protected $dir_theme = "../src/FrontBundle/Resources/views/"  ;
+	protected $dir_theme = "../app/Resources/FrontBundle/views/"  ;
 	
 	  /**
      * @Route("/admin/page/template/edite/{name}", name = "edit_template" , options={"expose"= true} , defaults={"routeparent" = "liste_template"} )
